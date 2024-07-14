@@ -20,7 +20,7 @@ export default function play() {
 
             <div className="flex flex-row gap-10">
                 <p className="flex text-2xl font-semibold">Select the Number of Discs:</p>
-                <input type="number" name="number" id="number" min={3} max={10} className="border-secondary border-2 rounded-lg bg-transparent p-1" onChange={(e)=>setNumber(parseInt(e.target.value))}/>
+                <input type="number" name="number" id="number" min={3} max={10} className="border-secondary border-2 rounded-lg bg-secondary p-1" placeholder="discs" onChange={(e)=>setNumber(parseInt(e.target.value))}/>
             </div>
 
             <div className="flex bg-accent hover:shadow-xl text-3xl font-semibold p-2 rounded-lg cursor-pointer" onClick={handleStart}>Start</div>

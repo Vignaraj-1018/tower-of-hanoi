@@ -1,17 +1,46 @@
 "use client"
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function count({params: { count }}: {params: { count: number }}) {
 
     
-    const [stack1, setStack1] = useState([1, 3, 4, 6]);
-    const [stack2, setStack2] = useState([2, 5]);
-    const [stack3, setStack3] = useState([7, 8, 9]);
+    const [stack1, setStack1] = useState([1, 3]);
+    const [stack2, setStack2] = useState([2]);
+    const [stack3, setStack3] = useState([4]);
 
     const [draggedItem, setDraggedItem] = useState(Number);
     const [draggedStack, setDraggedStack] = useState(String);
+
+    const [moves, setMoves] = useState(0);
+    
+    const [time, setTime] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
+    
+    const [timer,setTimer]:any = useState();
+
+    const [gameOver, setGameOver] = useState(false);
+    const [score, setScore] = useState(0);
+    const [name, setName] = useState(String);
+    const router = useRouter();
+
+    const timerStart = () => {
+        if (isRunning) return;
+        setIsRunning(true);
+        let timeoutId = setInterval(() => {
+        setTime((prevTime) => prevTime + 10); // Increment by 10 milliseconds
+        }, 10);
+        setTimer(timeoutId);
+    };
+
+    const formatTime = (time:any) => {
+        const seconds = ('0' + Math.floor((time / 1000) % 60)).slice(-2);
+        const minutes = ('0' + Math.floor((time / 60000) % 60)).slice(-2);
+        const hours = Math.floor(time / 3600000);
+        return `${hours}:${minutes}:${seconds}`;
+    };
     
     const handleDragStart = (e:any) => {
         let id = e.target.id.split('-');
@@ -28,6 +57,8 @@ export default function count({params: { count }}: {params: { count: number }}) 
 
         if (checkDragAndDrop(e.target.id)){
             dragAndDrop(e.target.id);
+            setMoves(moves + 1);
+            timerStart();
         }
         else{
             toast.warning('Invalid Move!', {
@@ -88,17 +119,54 @@ export default function count({params: { count }}: {params: { count: number }}) 
         }
     }
 
+    useEffect(()=>{
+        checkGameOverState();
+    },[stack1,stack2,stack3]);
+
+    const checkGameOverState = () =>{
+        console.log("Checking game over");
+        console.log(stack1);
+        console.log(stack2);
+        console.log(stack3);
+        if ((stack1.length == 0 && stack2.length == 0) || (stack1.length == 0 && stack3.length == 0) || (stack2.length == 0 && stack3.length == 0)){
+            console.log("Game over");
+            clearInterval(timer);
+            setGameOver(true);
+            let score = 5000 - (moves * 5) - (time / 2000);
+            console.log(score, time, time / 2000);
+            setScore(score);
+            toast.success('Success, You Won!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "light",
+                });
+        }
+    }
+
     const getWidthForDisc = (item:number) =>{
         return (item * 25) + 'px';
     }
 
     const getDragCondition = (key:number) =>{
-        if (key == 0){
+        if (key == 0 && !gameOver){
             return true;
         }
         else{
             return false;
         }
+    }
+
+    const handleSubmit = () =>{
+        console.log(name);
+    }
+
+    const handleClose = () =>{
+        router.push('/play');
     }
 
 
@@ -109,9 +177,9 @@ export default function count({params: { count }}: {params: { count: number }}) 
 
                 <div className="grid grid-cols-2 gap-4">
                     <div className="text-2xl font-semibold">Time:</div>
-                    <div className="text-2xl font-semibold">01:00</div>
+                    <div className="text-2xl font-semibold">{formatTime(time)}</div>
                     <div className="text-2xl font-semibold">Moves:</div>
-                    <div className="text-2xl font-semibold">10</div>
+                    <div className="text-2xl font-semibold">{moves}</div>
                 </div>
 
                 <div className="flex flex-col sm:w-4/5 w-full sm:border-2 border-secondary rounded-lg h-full sm:p-10">
@@ -135,6 +203,23 @@ export default function count({params: { count }}: {params: { count: number }}) 
                     <div className="flex h-1/6 w-full justify-center items-center text-2xl font-semibold">Number of Discs: {count}</div>
                 </div>
             </div>
+
+            {gameOver && <div className="flex items-center justify-center fixed inset-0 z-30 w-full h-full bg-[#00000085]">
+                <div className="flex flex-col h-1/2 w-2/3 bg-primary text-2xl font-semibold rounded-xl p-10">
+                    <div className="flex w-full justify-end cursor-pointer" onClick={handleClose}>X</div>
+                    <div className="flex flex-col items-center gap-10">
+                        <div className="flex flex-col gap-5 items-center">
+                            <p className="flex">Game Over!</p>
+                            <p className="flex gap-2">Your Score: <span className="flex font-bold text-2xl">{score.toFixed(0)}</span></p>
+                        </div>
+                        <div className="flex flex-col items-center gap-10">
+                            <p className="flex">Enter your name to save the score</p>
+                            <input type="text" name="name" id="name" className="flex bg-none border-2 rounded-lg bg-secondary border-secondary p-2 text-center" placeholder="Enter you Name" onChange={(e)=>setName(e.target.value)}/>
+                            <button type="submit" className="flex bg-accent rounded-lg p-2 hover:shadow-2xl text-white" onClick={handleSubmit}>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>}
             <ToastContainer />
         </div>
     );
