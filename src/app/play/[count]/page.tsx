@@ -1,15 +1,15 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function count({params: { count }}: {params: { count: number }}) {
 
     
-    const [stack1, setStack1] = useState([1, 3]);
+    const [stack1, setStack1] = useState([1]);
     const [stack2, setStack2] = useState([2]);
-    const [stack3, setStack3] = useState([4]);
+    const [stack3, setStack3] = useState([3]);
 
     const [draggedItem, setDraggedItem] = useState(Number);
     const [draggedStack, setDraggedStack] = useState(String);
@@ -26,6 +26,10 @@ export default function count({params: { count }}: {params: { count: number }}) 
     const [name, setName] = useState(String);
     const router = useRouter();
 
+    useEffect(()=>{
+        prepateBoard();
+    },[]);
+
     const timerStart = () => {
         if (isRunning) return;
         setIsRunning(true);
@@ -41,6 +45,20 @@ export default function count({params: { count }}: {params: { count: number }}) 
         const hours = Math.floor(time / 3600000);
         return `${hours}:${minutes}:${seconds}`;
     };
+
+    const prepateBoard = () => {
+        console.log("prepareBoard")
+        let boardData:any = sessionStorage.getItem('boardData');
+        if (boardData) {
+            boardData = JSON.parse(boardData);
+            console.log(boardData);
+        }
+
+        setStack1(boardData[0]);
+        setStack2(boardData[1]);
+        setStack3(boardData[2]);
+
+    }
     
     const handleDragStart = (e:any) => {
         let id = e.target.id.split('-');
@@ -70,12 +88,15 @@ export default function count({params: { count }}: {params: { count: number }}) 
                 draggable: false,
                 progress: undefined,
                 theme: "light",
-                });
+            });
         }
 
     };
 
     const checkDragAndDrop = (dropStackId:string) =>{
+        if(dropStackId.length>1){
+            return false;
+        }
         if (dropStackId == draggedStack){
             return false;
         }
@@ -120,7 +141,9 @@ export default function count({params: { count }}: {params: { count: number }}) 
     }
 
     useEffect(()=>{
-        checkGameOverState();
+        if(isRunning){
+            checkGameOverState();
+        }
     },[stack1,stack2,stack3]);
 
     const checkGameOverState = () =>{
@@ -133,7 +156,6 @@ export default function count({params: { count }}: {params: { count: number }}) 
             clearInterval(timer);
             setGameOver(true);
             let score = 5000 - (moves * 5) - (time / 2000);
-            console.log(score, time, time / 2000);
             setScore(score);
             toast.success('Success, You Won!', {
                 position: "top-right",
@@ -149,7 +171,7 @@ export default function count({params: { count }}: {params: { count: number }}) 
     }
 
     const getWidthForDisc = (item:number) =>{
-        return (item * 25) + 'px';
+        return (item * 10) + '%';
     }
 
     const getDragCondition = (key:number) =>{

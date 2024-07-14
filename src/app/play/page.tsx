@@ -11,8 +11,42 @@ export default function play() {
         if (number < 3 || number > 10){
             alert('Invalid number');
         }
+        prepateBoard();
         router.push(`/play/${number}`);
     }
+
+    const prepateBoard = () => {
+        let stack1:any = [], stack2:any = [], stack3:any = [];
+
+        const numbers = Array.from({ length: number }, (_, index) => index + 1);
+
+        for (let i = numbers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+        }
+
+        numbers.forEach((num, index) => {
+            const arrayIndex = index % 3;
+            switch (arrayIndex) {
+            case 0:
+                stack1.push(num);
+                break;
+            case 1:
+                stack2.push(num);
+                break;
+            case 2:
+                stack3.push(num);
+                break;
+            }
+        });
+
+        console.log(stack1, stack2, stack3);
+
+        let data = [stack1, stack2, stack3]
+        sessionStorage.setItem('boardData',JSON.stringify(data));
+
+    }
+
     return (
         <div className="flex w-full h-full items-center p-10 gap-10 flex-col">
 
