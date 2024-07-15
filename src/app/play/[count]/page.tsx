@@ -1,4 +1,5 @@
 "use client"
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -187,7 +188,34 @@ export default function count({params: { count }}: {params: { count: number }}) 
     }
 
     const handleSubmit = () =>{
-        console.log(name);
+        console.log(name, moves, time, score);
+        let data = {
+            name: name,
+            moves: moves,
+            duration: time,
+            score: score,
+            discs: count
+        }
+        axios.post("https://helper-api-vignu.el.r.appspot.com/toh/save", data)
+            .then((response) => {
+                console.log(response);
+                toast.success('Game Saved!', {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "light",
+                });
+                sessionStorage.removeItem('boardData');
+                sessionStorage.setItem('name', name);
+                router.push('/profile');
+            })
+           .catch((error) => {
+                console.log(error);
+           });
     }
 
     const handleClose = () =>{
