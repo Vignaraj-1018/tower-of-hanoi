@@ -52,11 +52,14 @@ export default function count({params: { count }}: {params: { count: number }}) 
         if (boardData) {
             boardData = JSON.parse(boardData);
             console.log(boardData);
+            setStack1(boardData[0]);
+            setStack2(boardData[1]);
+            setStack3(boardData[2]);
+        }
+        else{
+            router.push('/');
         }
 
-        setStack1(boardData[0]);
-        setStack2(boardData[1]);
-        setStack3(boardData[2]);
 
     }
     
@@ -188,7 +191,7 @@ export default function count({params: { count }}: {params: { count: number }}) 
     }
 
     const handleClose = () =>{
-        router.push('/play');
+        router.push('/');
     }
 
 
@@ -237,7 +240,7 @@ export default function count({params: { count }}: {params: { count: number }}) 
                         <div className="flex flex-col items-center gap-10">
                             <p className="flex">Enter your name to save the score</p>
                             <input type="text" name="name" id="name" className="flex bg-none border-2 rounded-lg bg-secondary border-secondary p-2 text-center" placeholder="Enter you Name" onChange={(e)=>setName(e.target.value)}/>
-                            <button type="submit" className="flex bg-accent rounded-lg p-2 hover:shadow-2xl text-white" onClick={handleSubmit}>Save</button>
+                            <button type="submit" className="flex bg-accent rounded-lg p-2 hover:shadow-2xl text-white select-none" onClick={handleSubmit}>Save</button>
                         </div>
                     </div>
                 </div>
