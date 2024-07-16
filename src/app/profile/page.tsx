@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function page() {
+export default function Page() {
 
     const [name, setName] = useState(String);
     const [userData, setUserData]:any[] = useState();

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function count({params: { count }}: {params: { count: number }}) {
+export default function Count({params: { count }}: {params: { count: number }}) {
 
     
     const [stack1, setStack1] = useState([1]);

@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function play() {
+export default function Play() {
     const [number, setNumber] = useState(3);
     const router = useRouter();
 
@@ -84,8 +84,8 @@ export default function play() {
                 <summary className="font-semibold underline underline-offset-2">Origin of the game</summary>
                 <div className="flex flex-col gap-2">
                   <p className="flex">According to Wikipedia the puzzle was introduced to the West by French mathematician Édouard Lucas in 1883.</p>
-                  <p className="flex">Numerous myths about the puzzle's ancient and mystical nature emerged almost immediately, including one about an Indian temple at Kashi Vishwanath containing a large room with three aged poles surrounded by 64 golden discs.</p>
-                  <p className="flex">Acting on the command of an ancient prophecy, the Brahmin priests have been moving these discs according to Brahma's immutable rules since that time.</p>
+                  <p className="flex">Numerous myths about the puzzle&apos;s ancient and mystical nature emerged almost immediately, including one about an Indian temple at Kashi Vishwanath containing a large room with three aged poles surrounded by 64 golden discs.</p>
+                  <p className="flex">Acting on the command of an ancient prophecy, the Brahmin priests have been moving these discs according to Brahma&apos;s immutable rules since that time.</p>
                   <p className="flex">The puzzle is therefore also known as the Tower of Brahma. According to legend, when the last move of the puzzle is completed, the world will end.</p>
                 </div>
               </details>
