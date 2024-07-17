@@ -1,15 +1,27 @@
 "use client"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Play() {
     const [number, setNumber] = useState(3);
     const router = useRouter();
 
     const handleStart = ()=>{
-        console.log('handleStart', number);
+        // console.log('handleStart', number);
         if (number < 3 || number > 10){
-            alert('Invalid number');
+            toast.error('Invalid number!', {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+              theme: "light",
+          });
+          return;
         }
         prepateBoard();
         router.push(`/play/${number}`);
@@ -40,7 +52,7 @@ export default function Play() {
             }
         });
 
-        console.log(stack1, stack2, stack3);
+        // console.log(stack1, stack2, stack3);
 
         let data = [stack1, stack2, stack3]
         sessionStorage.setItem('boardData',JSON.stringify(data));
@@ -91,7 +103,7 @@ export default function Play() {
               </details>
 
             </div>
-            
+            <ToastContainer />
         </div>
     );
 }

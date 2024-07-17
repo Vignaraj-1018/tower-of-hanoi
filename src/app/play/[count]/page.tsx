@@ -48,11 +48,11 @@ export default function Count({params: { count }}: {params: { count: number }}) 
     };
 
     const prepateBoard = () => {
-        console.log("prepareBoard")
+        // console.log("prepareBoard")
         let boardData:any = sessionStorage.getItem('boardData');
         if (boardData) {
             boardData = JSON.parse(boardData);
-            console.log(boardData);
+            // console.log(boardData);
             setStack1(boardData[0]);
             setStack2(boardData[1]);
             setStack3(boardData[2]);
@@ -151,12 +151,12 @@ export default function Count({params: { count }}: {params: { count: number }}) 
     },[stack1,stack2,stack3]);
 
     const checkGameOverState = () =>{
-        console.log("Checking game over");
-        console.log(stack1);
-        console.log(stack2);
-        console.log(stack3);
+        // console.log("Checking game over");
+        // console.log(stack1);
+        // console.log(stack2);
+        // console.log(stack3);
         if ((stack1.length == 0 && stack2.length == 0) || (stack1.length == 0 && stack3.length == 0) || (stack2.length == 0 && stack3.length == 0)){
-            console.log("Game over");
+            // console.log("Game over");
             clearInterval(timer);
             setGameOver(true);
             let score = 5000 - (moves * 5) - (time / 2000);
@@ -188,7 +188,7 @@ export default function Count({params: { count }}: {params: { count: number }}) 
     }
 
     const handleSubmit = () =>{
-        console.log(name, moves, time, score);
+        // console.log(name, moves, time, score);
         let data = {
             name: name,
             moves: moves,
@@ -198,7 +198,7 @@ export default function Count({params: { count }}: {params: { count: number }}) 
         }
         axios.post("https://helper-api-vignu.el.r.appspot.com/toh/save", data)
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 toast.success('Game Saved!', {
                     position: "top-right",
                     autoClose: 2000,

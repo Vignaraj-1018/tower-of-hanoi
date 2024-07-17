@@ -16,7 +16,7 @@ export default function Page() {
 
         axios.get("https://helper-api-vignu.el.r.appspot.com/toh/all/"+_name)
             .then((resp:any)=>{
-                console.log(resp.data);
+                // console.log(resp.data);
                 setUserData(resp.data);
             })
             .catch((err)=>{
@@ -25,7 +25,7 @@ export default function Page() {
     }
 
     const handleSubmit = () => {
-        console.log('Name:', name);
+        // console.log('Name:', name);
         getUserData(name);
     }
 
@@ -57,7 +57,7 @@ export default function Page() {
             </div>
 
             <div className="flex flex-col gap-5 items-center">
-                <p className="flex text-2xl font-semibold">Your History</p>
+                <p className="flex text-3xl font-semibold underline underline-offset-2">Your History</p>
                 <table>
                     <thead>
                         <tr className="border-2 border-accent bg-accent text-white">
@@ -76,9 +76,14 @@ export default function Page() {
                                 <td className="border-2 border-accent p-2 w-32">{item.score}</td>
                             </tr>
                         ))}
-                        {!userData && 
+                        {!userData && name &&
                             <tr>
                                 <td className="border-2 border-accent p-2 text-center text-2xl font-semibold" colSpan={4}>Loading...</td>
+                            </tr>
+                        }
+                        {!name &&
+                            <tr>
+                                <td className="border-2 border-accent p-2 text-center text-2xl font-semibold" colSpan={4}>Enter your name to get History</td>
                             </tr>
                         }
                         {userData?.length == 0 && 
