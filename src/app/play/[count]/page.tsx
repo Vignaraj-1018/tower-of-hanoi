@@ -253,7 +253,7 @@ export default function Count({params: { count }}: {params: { count: number }}) 
                             ))}
                         </div>
                     </div>
-                    <div className="flex h-1/6 w-full justify-center items-center text-2xl font-semibold">Number of Discs: {count}</div>
+                    <div className="flex h-1/6 w-full justify-center items-center text-2xl font-semibold">Number of Disks: {count}</div>
                 </div>
             </div>
 

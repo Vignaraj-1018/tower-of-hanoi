@@ -62,7 +62,7 @@ export default function Page() {
                     <thead>
                         <tr className="border-2 border-accent bg-accent text-white">
                             <th className="border-2 border-accent p-2 w-32">Duration</th>
-                            <th className="border-2 border-accent p-2 w-32">Discs</th>
+                            <th className="border-2 border-accent p-2 w-32">Disks</th>
                             <th className="border-2 border-accent p-2 w-32">Moves</th>
                             <th className="border-2 border-accent p-2 w-32">Score</th>
                         </tr>
