@@ -46,7 +46,7 @@ export default function Page() {
 
     
     return (
-        <div className="flex w-full h-full items-center sm:p-10 py-10 gap-10 flex-col">
+        <div className="flex w-full h-full items-center sm:p-10 py-10 px-5 gap-10 flex-col">
             
             <div className="flex flex-col gap-4 items-center">
                 <div className="flex flex-row gap-2 items-center">
@@ -57,9 +57,9 @@ export default function Page() {
             </div>
 
             <div className="flex flex-col gap-5 items-center">
-                <p className="flex text-3xl font-semibold underline underline-offset-2">Your History</p>
+                <p className="flex text-3xl font-semibold underline underline-offset-2 select-none">Your History</p>
                 <table>
-                    <thead>
+                    <thead className="select-none">
                         <tr className="border-2 border-accent bg-accent text-white">
                             <th className="border-2 border-accent p-2 w-32">Duration</th>
                             <th className="border-2 border-accent p-2 w-32">Disks</th>
@@ -97,7 +97,7 @@ export default function Page() {
                 </table>
                 
                 <p className="flex text-xl font-semibold">
-                    <a href="/" className="text-accent underline underline-offset-2">Click Here to Play</a>
+                    <a href="/" className="text-accent hover:underline underline-offset-2 select-none">Click Here to Play</a>
                 </p>
             </div>
 

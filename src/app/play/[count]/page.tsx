@@ -258,7 +258,7 @@ export default function Count({params: { count }}: {params: { count: number }}) 
             </div>
 
             {gameOver && <div className="flex items-center justify-center fixed inset-0 z-30 w-full h-full bg-[#00000085]">
-                <div className="flex flex-col h-1/2 w-2/3 bg-primary text-2xl font-semibold rounded-xl p-10">
+                <div className="flex flex-col h-1/2 sm:w-2/3 bg-primary text-2xl font-semibold rounded-xl p-10">
                     <div className="flex w-full justify-end cursor-pointer" onClick={handleClose}>X</div>
                     <div className="flex flex-col items-center gap-10">
                         <div className="flex flex-col gap-5 items-center">
