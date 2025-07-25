@@ -14,7 +14,7 @@ export default function Page() {
 
         setUserData(null)
 
-        axios.get("https://helper-api-vignu.el.r.appspot.com/toh/all/"+_name)
+        axios.get("https://api.vignaraj.in/toh/all/"+_name)
             .then((resp:any)=>{
                 // console.log(resp.data);
                 setUserData(resp.data);

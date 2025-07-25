@@ -196,7 +196,7 @@ export default function Count({params: { count }}: {params: { count: number }}) 
             score: score,
             discs: count
         }
-        axios.post("https://helper-api-vignu.el.r.appspot.com/toh/save", data)
+        axios.post("https://api.vignaraj.in/toh/save", data)
             .then((response) => {
                 // console.log(response);
                 toast.success('Game Saved!', {
